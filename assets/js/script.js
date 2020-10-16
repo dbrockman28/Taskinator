@@ -87,8 +87,11 @@ let createTaskActions = function(taskId) {
 formEl.addEventListener("submit", taskFormHandler);
 
 let taskButtonHandler = function(event) {
-    console.log(event.target)
-    if (event.target.matches(".delete-btn")) {
+    // console.log(event.target);
+    if (event.target.matches(".edit-btn")) {
+        let taskId = event.target.getAttribute("data-task-id");
+        editTask(taskId);
+    } else if (event.target.matches(".delete-btn")) {
         let taskId = event.target.getAttribute("data-task-id");
         deleteTask(taskId);
     }
@@ -97,6 +100,20 @@ let taskButtonHandler = function(event) {
 let deleteTask = function(taskId) {
     let taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
     taskSelected.remove();
+};
+
+let editTask = function(taskId) {
+    // Get task list item element
+    let taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+    // Get content from task name...
+    let taskName = taskSelected.querySelector("h3.task-name").textContent;
+    document.querySelector("input[name='task-name']").value = taskName;
+    // ...and type
+    let taskType = taskSelected.querySelector("span.task-type").textContent;
+    document.querySelector("select[name='task-type']").value = taskType;
+    // Change "Add Task to "Save Task"
+    document.querySelector("#save-task").textContent = "Save Task";
+    formEl.setAttribute("data-task-id", taskId);
 };
 
 pageContentEl.addEventListener("click", taskButtonHandler);
