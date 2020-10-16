@@ -2,6 +2,7 @@ let placeholderTask = document.querySelector("#placeholder")
 let formEl = document.querySelector("#task-form");
 let tasksToDoEl = document.querySelector("#tasks-to-do");
 let taskIdCounter = 0;
+let pageContentEl = document.querySelector("#page-content");
 
 let taskFormHandler = function(event) {
     //Keeps page from refreshing with every submission
@@ -84,3 +85,18 @@ let createTaskActions = function(taskId) {
 
 // Adds task with button click or when enter key is pressed
 formEl.addEventListener("submit", taskFormHandler);
+
+let taskButtonHandler = function(event) {
+    console.log(event.target)
+    if (event.target.matches(".delete-btn")) {
+        let taskId = event.target.getAttribute("data-task-id");
+        deleteTask(taskId);
+    }
+};
+
+let deleteTask = function(taskId) {
+    let taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+    taskSelected.remove();
+};
+
+pageContentEl.addEventListener("click", taskButtonHandler);
