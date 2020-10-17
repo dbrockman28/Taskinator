@@ -165,8 +165,8 @@ let dragTaskHandler = function(event) {
 let dropZoneDragHandler = function(event) {
     let taskListEl = event.target.closest(".task-list");
      if (taskListEl) {
-         event.preventDefault();
-     
+        event.preventDefault();
+        taskListEl.setAttribute("style", "background: rgba(68,233,255,0.7); border-style: dashed;");
      }
 };
 
@@ -184,17 +184,26 @@ let dropTaskHandler = function(event) {
         statusSelectEl.selectedIndex = 2;
     }
     dropZoneEl.appendChild(draggableElement);
+    dropZoneEl.removeAttribute("style");
 };
 
-// Adds task with button click or when enter key is pressed
+let dragLeaveHandler = function(event) {
+    let taskListEl = event.target.closest(".task-list")
+    if (taskListEl) {
+        taskListEl.removeAttribute("style");
+    }
+}
+
 formEl.addEventListener("submit", taskFormHandler);
-// Listens for clicks on section elements (buttons, dropdowns. etc.)
+
 pageContentEl.addEventListener("click", taskButtonHandler);
-// Changes columns based on dropdown delection
+
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
-// 
+
 pageContentEl.addEventListener("dragstart", dragTaskHandler);
-//
+
 pageContentEl.addEventListener("dragover", dropZoneDragHandler);
 
 pageContentEl.addEventListener("drop", dropTaskHandler);
+
+pageContentEl.addEventListener("dragleave", dragLeaveHandler);
