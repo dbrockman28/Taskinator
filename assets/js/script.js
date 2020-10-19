@@ -228,6 +228,7 @@ let saveTasks = function() {
 };
 
 let loadTasks = function() {
+    placeholderTask.remove();
     // Get task infor from localStorage
     // Convert task info strings into an array of object
     // Loop through tasks array and create elements on page
@@ -242,7 +243,7 @@ let loadTasks = function() {
     for (let i = 0; i < tasks.length; i++) {
         tasks[i].id = taskIdCounter;
         let listItemEl = document.createElement("li");
-        listItemEl.className = "task=item";
+        listItemEl.className = "task-item";
         listItemEl.setAttribute("data-task-id", tasks[i].id);
         listItemEl.setAttribute("draggable", true);
         let taskInfoEl = document.createElement("div");
@@ -262,7 +263,6 @@ let loadTasks = function() {
             tasksCompletedEl.appendChild(listItemEl);
         }
         taskIdCounter++;
-        placeholderTask.remove();
     }
 };
 
